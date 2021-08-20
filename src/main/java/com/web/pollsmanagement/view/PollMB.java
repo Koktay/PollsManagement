@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.faces.model.SelectItem;
+import javax.faces.model.SelectItemGroup;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -37,10 +39,22 @@ public class PollMB {
     @Setter
     private String titulo;
 
+    @Getter
+    @Setter
+    private String selectedGame;
+
     @PostConstruct
     public void init() throws UnirestException {
         games = pollnterface.buscar();
         keys.addAll(games.keySet());
+    }
+
+    public void salvarGame(){
+        System.out.println(selectedGame);
+    }
+
+    public void salvarTitulo(){
+        System.out.println(titulo);
     }
 
 
