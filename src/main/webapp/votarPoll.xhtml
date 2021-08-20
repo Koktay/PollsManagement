@@ -7,26 +7,26 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
-    <h:outputStylesheet name="/css/bootstrap.min.css" />
-    <h:outputStylesheet name="/css/style.css" />
+    <h:outputStylesheet name="/css/bootstrap.min.css"/>
+    <h:outputStylesheet name="/css/style.css"/>
 </h:head>
 <h:body>
 
     <div id="header">
-        <ui:insert name="header" >
-            <ui:include src="/header.xhtml" />
+        <ui:insert name="header">
+            <ui:include src="/header.xhtml"/>
         </ui:insert>
     </div>
 
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-7">
             <div class="wrap w-100">
                 <div class="heading-title mb-4 text-center">
                     <h:outputLabel value="#{pollMB.titulo}"/>
                 </div>
                 <ul class="ks-cboxtags p-0 m-0">
                     <li>
-                        <h:selectBooleanCheckbox type="checkbox" id="checkboxOne1" checked=""/>
+                        <h:selectBooleanCheckbox type="checkbox" id="checkboxOne1" checked="" value=""/>
                         <h:outputLabel for="checkboxOne1" value="#{pollMB.games.get(pollMB.keys.get(0))}"/>
                     </li>
                     <li>
@@ -65,8 +65,10 @@
                         <h:selectBooleanCheckbox type="checkbox" id="checkboxOne10" checked=""/>
                         <h:outputLabel for="checkboxOne10" value="#{pollMB.games.get(pollMB.keys.get(9))}"/>
                     </li>
-
                 </ul>
+            </div>
+            <div align="center" style="margin-top: 20px">
+                <button type="submit" class="btn btn-info btn-lg">Votar</button>
             </div>
         </div>
     </div>
