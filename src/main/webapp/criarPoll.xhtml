@@ -6,31 +6,20 @@
 <h:head>
     <title>Criar Polls</title>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-    <h:outputStylesheet name="/css/bootstrap.min.css" />
-    <h:outputStylesheet href="/css/style.css" />
-    <h:outputScript library="js" name="bootstrap.min.js"/>
+    <h:outputStylesheet library="css" name="/bootstrap.min.css" />
 </h:head>
 <h:body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/index.xhtml">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="j_spring_security_logout">Sair</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <div id="header">
+        <ui:insert name="header" >
+            <ui:include src="/header.xhtml" />
+        </ui:insert>
+    </div>
 
     <div class="panel panel-default" style="margin-left: 10px">
         <div class="panel-heading">
             <div class="clearfix">
-                <h3 class="panel-title fgr-titulo-panel">Crie Poll</h3>
+                <h4 class="panel-title fgr-titulo-panel">Crie Poll</h4>
             </div>
         </div>
 
@@ -46,5 +35,9 @@
             </h:form>
         </div>
     </div>
+
+    <h:outputScript library="js" name="bootstrap.min.js"/>
+    <h:outputScript library="js" name="jquery-3.1.1.min.js"/>
+
 </h:body>
 </html>
