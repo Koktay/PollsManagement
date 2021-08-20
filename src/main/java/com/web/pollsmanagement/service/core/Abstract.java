@@ -1,21 +1,17 @@
 package com.web.pollsmanagement.service.core;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.web.pollsmanagement.response.ResponseWS;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import com.web.pollsmanagement.service.AppPropertiesService;
 import lombok.Getter;
 import lombok.Setter;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
 
-import javax.faces.bean.ManagedProperty;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public abstract class Abstract {
 
@@ -26,35 +22,25 @@ public abstract class Abstract {
 
 
 
-	protected Object post() {
+	protected Map<Integer, String> post() throws UnirestException {
 
-		String url = appPropertiesService.getUrl();
-		HttpEntity<Object> request = new HttpEntity<>(postHeader());
+		Map<Integer, String> games = new HashMap<>();
 
-		ResponseWS response = new RestTemplate().postForObject(url, request, ResponseWS.class);
-		if (isArrayList(response)) {
-			return listConverter((List<?>) response.getResult());
+		HttpResponse<JsonNode> jsonResponse = Unirest.post(appPropertiesService.getUrl())
+				.header("Client-ID", appPropertiesService.getId())
+				.header("Authorization", appPropertiesService.getAuth())
+				.header("Accept", "application/json")
+				.body("fields name;")
+				.asJson();
+
+		JSONArray json = jsonResponse.getBody().getArray();
+		for(int i=0;i<json.length();i++){
+			String nome = json.getJSONObject(i).getString("name");
+			Integer id = json.getJSONObject(i).getInt("id");
+			games.put(id, nome);
 		}
-		return Optional.of(converter(response.getResult())).orElse(null);
-	}
 
-	private MultiValueMap<String, String> postHeader() {
-		MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
-		headers.add("Client-ID", "w5o4sm8h87mngl0lb9lag0vb3dare1");
-		headers.add("Authorization", "Bearer q3qi6v21hir5bdiei8yf7d2pu1vlt7");
-		return headers;
-	}
-
-	private boolean isArrayList(ResponseWS responseWS) {
-		return responseWS.getResult().getClass().getTypeName().equals("java.util.ArrayList");
-	}
-
-	private List<?> listConverter(List<?> results) {
-		return results.stream().map(this::converter).collect(Collectors.toList());
-	}
-
-	private Object converter(Object object) {
-		return new ObjectMapper().convertValue(object, (Class<?>) com.web.pollsmanagement.model.Game.class);
+		return games;
 	}
 
 }

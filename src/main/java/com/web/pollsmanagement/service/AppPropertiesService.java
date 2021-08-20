@@ -16,4 +16,10 @@ public class AppPropertiesService {
 	@Getter	@Setter
 	private String url;
 
+	@Getter	@Setter
+	private String id;
+
+	@Getter	@Setter
+	private String auth;
+
 }

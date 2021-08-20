@@ -1,20 +1,21 @@
 package com.web.pollsmanagement.service.impl;
 
+import com.mashape.unirest.http.exceptions.UnirestException;
 import com.web.pollsmanagement.model.Game;
 import com.web.pollsmanagement.service.Pollnterface;
 import com.web.pollsmanagement.service.core.Abstract;
 import org.springframework.stereotype.Service;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import java.util.Map;
+
 
 @Service
 public class PollnterfaceImpl extends Abstract implements Pollnterface  {
 
     @Override
-    public Game buscar() {
+    public Map<Integer, String> buscar() throws UnirestException {
 
-        return (Game) post();
+        return post();
 
     }
 }
