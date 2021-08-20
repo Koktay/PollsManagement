@@ -1,35 +1,50 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
     <title>Criar Polls</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <h:outputStylesheet name="/css/bootstrap.min.css" />
+    <h:outputStylesheet href="/css/style.css" />
+    <h:outputScript library="js" name="bootstrap.min.js"/>
 </h:head>
 <h:body>
-    <ui:composition template="/menu.xhtml">
-        <div class="panel panel-default" style="margin-left: 10px">
-            <div class="panel-heading">
-                <div class="clearfix">
-                    <h3 class="panel-title fgr-titulo-panel">Crie Poll</h3>
-                </div>
-            </div>
 
-            <div class="panel-body">
-                <h:form class="form-horizontal" method="POST">
-
-                    <div class="form-group">
-                        <h:outputLabel for="titulo" class="col-sm-2 control-label">Título</h:outputLabel>
-                        <div class="col-sm-4">
-                            <p:inputText class="form-control" id="titulo" value="#{pollMB.titulo}"/>
-                        </div>
-                    </div>
-                </h:form>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/index.xhtml">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="j_spring_security_logout">Sair</a>
+                    </li>
+                </ul>
             </div>
         </div>
-    </ui:composition>
+    </nav>
+
+    <div class="panel panel-default" style="margin-left: 10px">
+        <div class="panel-heading">
+            <div class="clearfix">
+                <h3 class="panel-title fgr-titulo-panel">Crie Poll</h3>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <h:form class="form-horizontal" method="POST">
+
+                <div class="form-group">
+                    <h:outputLabel for="titulo" class="col-sm-2 control-label">Título</h:outputLabel>
+                    <div class="col-sm-4">
+                        <h:inputText class="form-control" id="titulo" value="#{pollMB.titulo}"/>
+                    </div>
+                </div>
+            </h:form>
+        </div>
+    </div>
 </h:body>
 </html>

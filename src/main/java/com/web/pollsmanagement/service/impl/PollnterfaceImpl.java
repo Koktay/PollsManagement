@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-@ManagedBean(name = "pollService")
-@SessionScoped
 @Service
 public class PollnterfaceImpl extends Abstract implements Pollnterface  {
 

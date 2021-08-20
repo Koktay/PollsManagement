@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
-@ManagedBean(name = "appPropertiesService")
-@ApplicationScoped
 @Service
 @ConfigurationProperties(prefix="app")
 public class AppPropertiesService {

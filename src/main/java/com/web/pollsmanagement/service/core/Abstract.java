@@ -21,7 +21,6 @@ public abstract class Abstract {
 
 	@Getter
 	@Setter
-	@ManagedProperty(value = "#{appPropertiesService}")
 	@Autowired
 	protected AppPropertiesService appPropertiesService;
 

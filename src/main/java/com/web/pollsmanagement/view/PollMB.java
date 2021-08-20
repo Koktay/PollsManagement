@@ -1,22 +1,20 @@
-package com.web.pollsmanagement.mb;
+package com.web.pollsmanagement.view;
 
 import com.web.pollsmanagement.service.Pollnterface;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
 
-@ManagedBean(name = "pollMB")
-@ViewScoped
+@Component
+@Scope("view")
 public class PollMB {
 
     @Getter
     @Setter
-    @ManagedProperty(value = "#{pollService}")
     @Autowired
     private Pollnterface pollnterface;
 
