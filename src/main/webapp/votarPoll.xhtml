@@ -5,7 +5,10 @@
 <h:head>
     <title>Votar Polls</title>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
-    <h:outputStylesheet library="css" name="/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <h:outputStylesheet name="/css/bootstrap.min.css" />
+    <h:outputStylesheet name="/css/style.css" />
 </h:head>
 <h:body>
 
@@ -15,72 +18,64 @@
         </ui:insert>
     </div>
 
-    <div class="panel panel-default" style="margin-left: 10px">
-        <div class="panel-heading">
-            <div class="clearfix">
-                <h3 class="panel-title fgr-titulo-panel">Vote</h3>
-            </div>
-        </div>
-
-        <div class="panel-body">
-            <h:form class="form-horizontal" method="POST">
-                <div align="center">
-                    <div class="form-group">
-                        <h:selectBooleanCheckbox id="box1"/>
-                        <h:outputLabel class="checkbox" for="box1" value="#{pollMB.games.get(pollMB.keys.get(0))}"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="checkbox" for="box2">
-                            <input type="checkbox" id="box2" value="#{pollMB.games.get(pollMB.keys.get(1))}"/>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label class="checkbox" for="box2">
-                            <input type="checkbox" id="box3" value="#{pollMB.games.get(pollMB.keys.get(2))}"/>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label class="checkbox" for="box2">
-                            <input type="checkbox" id="box4" value="#{pollMB.games.get(pollMB.keys.get(3))}"/>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label class="checkbox" for="box2">
-                            <input type="checkbox" id="box5" value="#{pollMB.games.get(pollMB.keys.get(4))}"/>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label class="checkbox" for="box2">
-                            <input type="checkbox" id="box6" value="#{pollMB.games.get(pollMB.keys.get(5))}"/>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label class="checkbox" for="box2">
-                            <input type="checkbox" id="box7" value="#{pollMB.games.get(pollMB.keys.get(6))}"/>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label class="checkbox" for="box2">
-                            <input type="checkbox" id="box8" value="#{pollMB.games.get(pollMB.keys.get(7))}"/>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label class="checkbox" for="box2">
-                            <input type="checkbox" id="box9" value="#{pollMB.games.get(pollMB.keys.get(8))}"/>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label class="checkbox" for="box2">
-                            <input type="checkbox" id="box10" value="#{pollMB.games.get(pollMB.keys.get(9))}"/>
-                        </label>
-                    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="wrap w-100">
+                <div class="heading-title mb-4 text-center">
+                    <h:outputLabel value="#{pollMB.titulo}"/>
                 </div>
-            </h:form>
+                <ul class="ks-cboxtags p-0 m-0">
+                    <li>
+                        <h:selectBooleanCheckbox type="checkbox" id="checkboxOne1" checked=""/>
+                        <h:outputLabel for="checkboxOne1" value="#{pollMB.games.get(pollMB.keys.get(0))}"/>
+                    </li>
+                    <li>
+                        <h:selectBooleanCheckbox type="checkbox" id="checkboxOne2" checked=""/>
+                        <h:outputLabel for="checkboxOne2" value="#{pollMB.games.get(pollMB.keys.get(1))}"/>
+                    </li>
+                    <li>
+                        <h:selectBooleanCheckbox type="checkbox" id="checkboxOne3" checked=""/>
+                        <h:outputLabel for="checkboxOne3" value="#{pollMB.games.get(pollMB.keys.get(2))}"/>
+                    </li>
+                    <li>
+                        <h:selectBooleanCheckbox type="checkbox" id="checkboxOne4" checked=""/>
+                        <h:outputLabel for="checkboxOne4" value="#{pollMB.games.get(pollMB.keys.get(3))}"/>
+                    </li>
+                    <li>
+                        <h:selectBooleanCheckbox type="checkbox" id="checkboxOne5" checked=""/>
+                        <h:outputLabel for="checkboxOne5" value="#{pollMB.games.get(pollMB.keys.get(4))}"/>
+                    </li>
+                    <li>
+                        <h:selectBooleanCheckbox type="checkbox" id="checkboxOne6" checked=""/>
+                        <h:outputLabel for="checkboxOne6" value="#{pollMB.games.get(pollMB.keys.get(5))}"/>
+                    </li>
+                    <li>
+                        <h:selectBooleanCheckbox type="checkbox" id="checkboxOne7" checked=""/>
+                        <h:outputLabel for="checkboxOne7" value="#{pollMB.games.get(pollMB.keys.get(6))}"/>
+                    </li>
+                    <li>
+                        <h:selectBooleanCheckbox type="checkbox" id="checkboxOne8" checked=""/>
+                        <h:outputLabel for="checkboxOne8" value="#{pollMB.games.get(pollMB.keys.get(7))}"/>
+                    </li>
+                    <li>
+                        <h:selectBooleanCheckbox type="checkbox" id="checkboxOne9" checked=""/>
+                        <h:outputLabel for="checkboxOne9" value="#{pollMB.games.get(pollMB.keys.get(8))}"/>
+                    </li>
+                    <li>
+                        <h:selectBooleanCheckbox type="checkbox" id="checkboxOne10" checked=""/>
+                        <h:outputLabel for="checkboxOne10" value="#{pollMB.games.get(pollMB.keys.get(9))}"/>
+                    </li>
+
+                </ul>
+            </div>
         </div>
     </div>
 
     <h:outputScript library="js" name="bootstrap.min.js"/>
     <h:outputScript library="js" name="jquery-3.1.1.min.js"/>
+    <h:outputScript library="js" name="jquery.min.js"/>
+    <h:outputScript library="js" name="main.js"/>
+    <h:outputScript library="js" name="main.js"/>
 
 </h:body>
 </html>
