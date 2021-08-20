@@ -8,7 +8,7 @@
       xmlns:p="http://primefaces.org/ui">
 <h:head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
-    <title>Home</title>
+    <title>Criar Polls</title>
 
     <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css"/>
     <link rel="stylesheet" href="/css/style.css" type="text/css"/>
@@ -16,6 +16,11 @@
 </h:head>
 <h:body>
 
+    <!--    <header id="menu">-->
+    <!--        <ui:insert name="menu">-->
+    <!--            <ui:include src="/menu.xhtml"/>-->
+    <!--        </ui:insert>-->
+    <!--    </header>-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <div class="collapse navbar-collapse">
@@ -32,15 +37,28 @@
     </nav>
 
 
-<div class="list-group col-sm-3">
-    <a href="#" class="list-group-item list-group-item-action bg-dark text-white">Link</a>
+    <div class="panel panel-default" style="margin-left: 10px">
+        <div class="panel-heading">
+            <div class="clearfix">
+                <h3 class="panel-title fgr-titulo-panel">Crie Poll</h3>
+            </div>
+        </div>
 
-    <a href="/criarPoll.xhtml" class="list-group-item list-group-item-action list-group-item-light">Criar Poll</a>
-    <a href="/votarPoll.xhtml" class="list-group-item list-group-item-action list-group-item-dark">Votar</a>
-    <a href="#" class="list-group-item list-group-item-action list-group-item-light">Visualizar</a>
-</div>
+        <div class="panel-body">
+            <h:form class="form-horizontal" method="POST">
 
-<script src="/js/bootstrap.min.js" type="javascript"></script>
+                <div class="form-group">
+                    <h:outputLabel for="titulo" class="col-sm-2 control-label">Título</h:outputLabel>
+                    <div class="col-sm-4">
+                        <p:inputText class="form-control" id="titulo" value="#{pollMB.titulo}"/>
+                    </div>
+                </div>
+            </h:form>
+        </div>
+    </div>
+
+
+    <script src="/js/bootstrap.min.js" type="javascript"></script>
 
 </h:body>
 </html>
