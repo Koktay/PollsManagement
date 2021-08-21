@@ -21,14 +21,14 @@
             <div class="col-md-9" style="margin-top: 20px">
                 <h3 align="center">Crie Poll</h3>
                 <div align="center" style="margin-top: 30px">
-                    <h:outputLabel for="titulo" class="col-sm-2 control-label">Título</h:outputLabel>
+                    <h:outputLabel for="categoria" class="col-sm-2 control-label">Categoria</h:outputLabel>
                     <div class="col-sm-6" align="center">
-                        <h:inputText class="form-control" id="titulo" value="#{pollMB.titulo}"/>
+                        <h:inputText class="form-control" id="categoria" value="#{pollMB.poll.categoria}"/>
                     </div>
 
                 </div>
                 <div align="center" style="margin-top: 20px">
-                    <p:commandButton value="Criar" action="#{pollMB.salvarTitulo}" update="@form" process="@form"
+                    <p:commandButton value="Criar" action="#{pollMB.criar}" update="@form" process="@form"
                                      class="btn btn-info btn-lg"/>
                 </div>
             </div>

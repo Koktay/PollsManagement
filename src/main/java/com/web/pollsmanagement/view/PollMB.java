@@ -1,8 +1,11 @@
 package com.web.pollsmanagement.view;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
+import com.web.pollsmanagement.model.Poll;
+import com.web.pollsmanagement.model.Usuario;
 import com.web.pollsmanagement.repository.Gamelnterface;
 import com.web.pollsmanagement.service.PollService;
+import com.web.pollsmanagement.service.UsuarioService;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,23 +40,34 @@ public class PollMB {
 
     @Getter
     @Setter
-    private String selectedGame;
+    private Poll poll = new Poll();
 
     @Autowired
-    public PollService service;
+    public PollService pollService;
+
+    @Autowired
+    public UsuarioService userService;
+
+    @Getter
+    @Setter
+    private Usuario user = new Usuario();
 
     @PostConstruct
     public void init() throws UnirestException {
         games = gamelnterface.buscar();
         keys.addAll(games.keySet());
+        user = userService.findUser();
     }
 
     public void votar(){
-        System.out.println(selectedGame);
+        System.out.println(user.getNome());
+//        poll.setVoto(1);
+//        poll.setUsuarios();
+//        service.savePoll(poll);
     }
 
-    public void salvarTitulo(){
-        System.out.println(titulo);
+    public void criar(){
+        System.out.println(poll.getCategoria());
     }
 
 

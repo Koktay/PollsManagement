@@ -10,6 +10,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.*;
 
@@ -41,6 +43,10 @@ public abstract class Abstract {
 		}
 
 		return games;
+	}
+
+	protected Authentication getUserLogged() {
+		return SecurityContextHolder.getContext().getAuthentication();
 	}
 
 }

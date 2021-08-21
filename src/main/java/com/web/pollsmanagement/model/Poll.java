@@ -1,16 +1,17 @@
 package com.web.pollsmanagement.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 public class Poll {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String titulo;
+    private String categoria;
+
+    private String tituloLivro;
 
     private Integer voto;
 
@@ -25,12 +26,20 @@ public class Poll {
         this.id = id;
     }
 
-    public String getTitulo() {
-        return titulo;
+    public String getCategoria() {
+        return categoria;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public String getTituloLivro() {
+        return tituloLivro;
+    }
+
+    public void setTituloLivro(String tituloLivro) {
+        this.tituloLivro = tituloLivro;
     }
 
     public Integer getVoto() {
@@ -48,5 +57,4 @@ public class Poll {
     public void setUsuarios(Usuario usuarios) {
         this.usuarios = usuarios;
     }
-
 }
