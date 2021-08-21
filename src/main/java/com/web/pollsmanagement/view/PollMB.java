@@ -46,6 +46,14 @@ public class PollMB {
     @Setter
     private Poll poll = new Poll();
 
+    @Getter
+    @Setter
+    private List<Poll> polls;
+
+    @Getter
+    @Setter
+    private Poll selectedPoll;
+
     @Autowired
     public PollService pollService;
 
@@ -61,6 +69,7 @@ public class PollMB {
         games = gamelnterface.buscar();
         keys.addAll(games.keySet());
         user = userService.findUser();
+        polls = pollService.repository.findAll();
     }
 
     public void votar() {

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <title>Votar Polls</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <h:outputStylesheet library="css" name="/bootstrap.min.css"/>
+</h:head>
+<h:body>
+
+    <div id="header">
+        <ui:insert name="header">
+            <ui:include src="/header.xhtml"/>
+        </ui:insert>
+    </div>
+
+
+    <div class="card">
+        <h:form id="form">
+            <p:dataTable id="polls" var="poll" value="#{pollMB.polls}" rowKey="#{poll.id}"
+                         selection="#{pollMB.selectedPoll}" selectionMode="single">
+                <f:facet name="header">
+                    Click com o Direito para Ver Opções
+                </f:facet>
+
+                <p:column headerText="Id">
+                    <h:outputText value="#{poll.id}" />
+                </p:column>
+                <p:column headerText="Criador">
+                    <h:outputText value="#{poll.usuarios.nome}" />
+                </p:column>
+                <p:column headerText="Categoria">
+                    <h:outputText value="#{poll.categoria}" />
+                </p:column>
+            </p:dataTable>
+
+            <p:contextMenu for="polls">
+                <p:menuitem value="Ver" update="productDetail" icon="pi pi-search"
+                            oncomplete="PF('productDialog').show()"/>
+            </p:contextMenu>
+
+            <p:dialog header="Poll" widgetVar="productDialog" modal="true" showEffect="fade"
+                      hideEffect="fade" resizable="false">
+                <p:outputPanel id="productDetail" style="text-align:center;">
+                    <p:column rendered="#{not empty pollMB.selectedPoll}">
+                        <div class="product">
+                            <div class="product-grid-item border-0" style="margin-bottom: 0">
+
+                            </div>
+                        </div>
+                    </p:column>
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+    </div>
+
+</h:body>
+</html>

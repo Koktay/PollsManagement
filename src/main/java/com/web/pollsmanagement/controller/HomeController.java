@@ -11,6 +11,7 @@ public class HomeController {
     static final String INDEX = "index.xhtml";
     static final String CRIAR = "criarPoll.xhtml";
     static final String VOTAR = "votarPoll.xhtml";
+    static final String VER = "verPoll.xhtml";
 
     @GetMapping
     public String init(){
@@ -25,5 +26,10 @@ public class HomeController {
     @RequestMapping("/votar")
     public String votar(){
         return VOTAR;
+    }
+
+    @RequestMapping("/ver")
+    public String ver(){
+        return VER;
     }
 }

@@ -58,6 +58,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/h2-console/**").fullyAuthenticated()
                 .antMatchers("/criar").fullyAuthenticated()
                 .antMatchers("/votar").fullyAuthenticated()
+                .antMatchers("/ver").fullyAuthenticated()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
