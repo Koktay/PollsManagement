@@ -2,45 +2,44 @@ package com.web.pollsmanagement.model;
 
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 public class Usuario {
 
     @Id
-    private Integer id;
+    private Long id;
 
-    private String name;
+    private String nome;
 
-    private Set<String> jogos;
+    private String jogos;
 
     private String senha;
 
-    private String auth;
+    private String authority;
 
     private Boolean enabled = true;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNome() {
+        return nome;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public Set<String> getJogos() {
+    public String getJogos() {
         return jogos;
     }
 
-    public void setJogos(Set<String> jogos) {
+    public void setJogos(String jogos) {
         this.jogos = jogos;
     }
 
@@ -52,12 +51,12 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public String getAuth() {
-        return auth;
+    public String getAuthority() {
+        return authority;
     }
 
-    public void setAuth(String auth) {
-        this.auth = auth;
+    public void setAuthority(String authority) {
+        this.authority = authority;
     }
 
     public Boolean getEnabled() {
