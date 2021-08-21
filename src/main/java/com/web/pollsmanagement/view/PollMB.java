@@ -6,6 +6,7 @@ import com.web.pollsmanagement.model.Usuario;
 import com.web.pollsmanagement.repository.Gamelnterface;
 import com.web.pollsmanagement.service.PollService;
 import com.web.pollsmanagement.service.UsuarioService;
+import com.web.pollsmanagement.util.Assert;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +40,7 @@ public class PollMB {
 
     @Getter
     @Setter
-    private String titulo;
+    private String categoria;
 
     @Getter
     @Setter
@@ -59,15 +63,22 @@ public class PollMB {
         user = userService.findUser();
     }
 
-    public void votar(){
-        System.out.println(user.getNome());
-//        poll.setVoto(1);
-//        poll.setUsuarios();
-//        service.savePoll(poll);
+    public void votar() {
+        poll.setVoto(1);
+        poll.setUsuarios(user);
+        poll.setCategoria(categoria);
+        if (!Assert.isNotNullOrEmpty(poll.getTituloLivro())) {
+            FacesContext.getCurrentInstance().addMessage("messages",
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Escolha um filme" +
+                            ".",
+                            ""));
+        } else {
+            pollService.savePoll(poll);
+        }
     }
 
-    public void criar(){
-        System.out.println(poll.getCategoria());
+    public void criar() throws IOException {
+        FacesContext.getCurrentInstance().getExternalContext().redirect("votar?categoria=" + categoria);
     }
 
 

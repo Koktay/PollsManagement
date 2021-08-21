@@ -11,8 +11,6 @@ public class Usuario {
 
     private String nome;
 
-    private String jogos;
-
     private String senha;
 
     private String authority;
@@ -33,14 +31,6 @@ public class Usuario {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getJogos() {
-        return jogos;
-    }
-
-    public void setJogos(String jogos) {
-        this.jogos = jogos;
     }
 
     public String getSenha() {

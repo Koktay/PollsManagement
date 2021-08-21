@@ -53,9 +53,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http
-                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/").fullyAuthenticated()
+                .antMatchers("/h2-console/**").fullyAuthenticated()
                 .antMatchers("/criar").fullyAuthenticated()
                 .antMatchers("/votar").fullyAuthenticated()
                 .anyRequest().permitAll()
@@ -64,7 +64,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutUrl("/j_spring_security_logout")
-                .logoutSuccessUrl("/login");
+                .logoutSuccessUrl("/login")
+                .and()
+                .headers().frameOptions().disable()
+                .and()
+                .csrf().disable();
     }
 
 }
