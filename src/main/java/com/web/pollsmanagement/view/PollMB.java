@@ -1,7 +1,8 @@
 package com.web.pollsmanagement.view;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
-import com.web.pollsmanagement.service.Pollnterface;
+import com.web.pollsmanagement.repository.Gamelnterface;
+import com.web.pollsmanagement.service.PollService;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,14 +10,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.faces.model.SelectItem;
-import javax.faces.model.SelectItemGroup;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 @Component
 @Scope("view")
@@ -25,7 +21,7 @@ public class PollMB {
     @Getter
     @Setter
     @Autowired
-    private Pollnterface pollnterface;
+    private Gamelnterface gamelnterface;
 
     @Getter
     @Setter
@@ -43,13 +39,16 @@ public class PollMB {
     @Setter
     private String selectedGame;
 
+    @Autowired
+    public PollService service;
+
     @PostConstruct
     public void init() throws UnirestException {
-        games = pollnterface.buscar();
+        games = gamelnterface.buscar();
         keys.addAll(games.keySet());
     }
 
-    public void salvarGame(){
+    public void votar(){
         System.out.println(selectedGame);
     }
 
