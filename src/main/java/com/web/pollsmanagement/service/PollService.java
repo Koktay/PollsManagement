@@ -40,7 +40,7 @@ public class PollService {
     }
 
     @Transactional
-    public void votar(Long id, String nomeJogo)  {
+    public void votar(Long id, String nomeJogo) throws Exception {
         Poll poll = pollRepository.getById(id);
 
         List<Jogo> jogos = poll.getJogos().stream().filter(jogo -> Objects.equals(jogo.getNome(), nomeJogo)).collect(Collectors.toList());
@@ -49,7 +49,8 @@ public class PollService {
             jogo.setVoto(jogo.getVoto() + 1);
             jogoRepository.save(jogo);
             pollRepository.save(poll);
+        } else {
+            throw new Exception("Id do jogo não é único!");
         }
-
     }
 }

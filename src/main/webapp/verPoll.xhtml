@@ -40,6 +40,8 @@
             <p:contextMenu for="polls">
                 <p:menuitem value="Ver" update="pollDetail" icon="pi pi-search"
                             oncomplete="PF('pollDialog').show()"/>
+                <p:menuitem value="Votar" update="pollDetail" icon="pi pi-check"
+                            action="#{pollMB.votarSelected}"/>
             </p:contextMenu>
 
             <p:dialog widgetVar="pollDialog" modal="true" showEffect="fade"

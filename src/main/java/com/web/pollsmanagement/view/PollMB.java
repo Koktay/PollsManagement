@@ -81,6 +81,10 @@ public class PollMB {
     @Setter
     private String jogoVotado;
 
+    @Getter
+    @Setter
+    private List<String> categorias = new ArrayList<>();
+
     @PostConstruct
     public void init() throws UnirestException {
         games = IGDBInterface.buscar();
@@ -97,7 +101,7 @@ public class PollMB {
         }
     }
 
-    public void votar() {
+    public void votar() throws Exception {
         poll.setJogos(jogos);
         poll.setTitulo(categoria);
         if (!Assert.isNotNullOrEmpty(jogoVotado)) {
@@ -112,7 +116,22 @@ public class PollMB {
     }
 
     public void criar() throws IOException {
-        FacesContext.getCurrentInstance().getExternalContext().redirect("votar?categoria=" + categoria);
+        polls.forEach(a -> categorias.add(a.getTitulo()));
+
+        if (!Assert.isEmpty(polls)) {
+            if (categorias.contains(categoria)) {
+                FacesContext.getCurrentInstance().addMessage("messages",
+                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Categoria existente!" +
+                                "",
+                                ""));
+            } else
+                FacesContext.getCurrentInstance().getExternalContext().redirect("votar?categoria=" + categoria);
+        } else
+            FacesContext.getCurrentInstance().getExternalContext().redirect("votar?categoria=" + categoria);
+    }
+
+    public void votarSelected() throws IOException {
+        FacesContext.getCurrentInstance().getExternalContext().redirect("votar?categoria=" + selectedPoll.getTitulo());
     }
 
 }
