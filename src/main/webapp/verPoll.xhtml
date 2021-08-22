@@ -27,28 +27,90 @@
                 </f:facet>
 
                 <p:column headerText="Id">
-                    <h:outputText value="#{poll.id}" />
+                    <h:outputText value="#{poll.id}"/>
                 </p:column>
                 <p:column headerText="Criador">
-                    <h:outputText value="#{poll.usuarios.nome}" />
+                    <h:outputText value="#{poll.usuario.nome}"/>
                 </p:column>
                 <p:column headerText="Categoria">
-                    <h:outputText value="#{poll.categoria}" />
+                    <h:outputText value="#{poll.titulo}"/>
                 </p:column>
             </p:dataTable>
 
             <p:contextMenu for="polls">
-                <p:menuitem value="Ver" update="productDetail" icon="pi pi-search"
-                            oncomplete="PF('productDialog').show()"/>
+                <p:menuitem value="Ver" update="pollDetail" icon="pi pi-search"
+                            oncomplete="PF('pollDialog').show()"/>
             </p:contextMenu>
 
-            <p:dialog header="Poll" widgetVar="productDialog" modal="true" showEffect="fade"
-                      hideEffect="fade" resizable="false">
-                <p:outputPanel id="productDetail" style="text-align:center;">
+            <p:dialog widgetVar="pollDialog" modal="true" showEffect="fade"
+                      hideEffect="fade" resizable="false" width="625" height="400">
+                <f:facet name="header">
+                    <p:outputPanel autoUpdate="true">#{pollMB.selectedPoll.titulo}</p:outputPanel>
+                </f:facet>
+                <p:outputPanel id="pollDetail" style="text-align:center;">
                     <p:column rendered="#{not empty pollMB.selectedPoll}">
                         <div class="product">
                             <div class="product-grid-item border-0" style="margin-bottom: 0">
-
+                                <div>
+                                    <h:outputLabel value="#{pollMB.games.get(pollMB.keys.get(0))}"/>
+                                    <p:progressBar widgetVar="pbAjax" ajax="true" value="50"
+                                                   labelTemplate="50%" styleClass="p-mt-3" global="false">
+                                    </p:progressBar>
+                                </div>
+                                <div style="margin-top: 20px">
+                                    <h:outputLabel value="#{pollMB.games.get(pollMB.keys.get(1))}"/>
+                                    <p:progressBar widgetVar="pbAjax" ajax="true" value="50"
+                                                   labelTemplate="50%" styleClass="p-mt-3" global="false">
+                                    </p:progressBar>
+                                </div>
+                                <div style="margin-top: 20px">
+                                    <h:outputLabel value="#{pollMB.games.get(pollMB.keys.get(2))}"/>
+                                    <p:progressBar widgetVar="pbAjax" ajax="true" value="50"
+                                                   labelTemplate="50%" styleClass="p-mt-3" global="false">
+                                    </p:progressBar>
+                                </div>
+                                <div style="margin-top: 20px">
+                                    <h:outputLabel value="#{pollMB.games.get(pollMB.keys.get(3))}"/>
+                                    <p:progressBar widgetVar="pbAjax" ajax="true" value="50"
+                                                   labelTemplate="50%" styleClass="p-mt-3" global="false">
+                                    </p:progressBar>
+                                </div>
+                                <div style="margin-top: 20px">
+                                    <h:outputLabel value="#{pollMB.games.get(pollMB.keys.get(4))}"/>
+                                    <p:progressBar widgetVar="pbAjax" ajax="true" value="50"
+                                                   labelTemplate="50%" styleClass="p-mt-3" global="false">
+                                    </p:progressBar>
+                                </div>
+                                <div style="margin-top: 20px">
+                                    <h:outputLabel value="#{pollMB.games.get(pollMB.keys.get(5))}"/>
+                                    <p:progressBar widgetVar="pbAjax" ajax="true" value="50"
+                                                   labelTemplate="50%" styleClass="p-mt-3" global="false">
+                                    </p:progressBar>
+                                </div>
+                                <div style="margin-top: 20px">
+                                    <h:outputLabel value="#{pollMB.games.get(pollMB.keys.get(6))}"/>
+                                    <p:progressBar widgetVar="pbAjax" ajax="true" value="50"
+                                                   labelTemplate="50%" styleClass="p-mt-3" global="false">
+                                    </p:progressBar>
+                                </div>
+                                <div style="margin-top: 20px">
+                                    <h:outputLabel value="#{pollMB.games.get(pollMB.keys.get(7))}"/>
+                                    <p:progressBar widgetVar="pbAjax" ajax="true" value="50"
+                                                   labelTemplate="50%" styleClass="p-mt-3" global="false">
+                                    </p:progressBar>
+                                </div>
+                                <div style="margin-top: 20px">
+                                    <h:outputLabel value="#{pollMB.games.get(pollMB.keys.get(8))}"/>
+                                    <p:progressBar widgetVar="pbAjax" ajax="true" value="50"
+                                                   labelTemplate="50%" styleClass="p-mt-3" global="false">
+                                    </p:progressBar>
+                                </div>
+                                <div style="margin-top: 20px">
+                                    <h:outputLabel value="#{pollMB.games.get(pollMB.keys.get(9))}"/>
+                                    <p:progressBar widgetVar="pbAjax" ajax="true" value="50"
+                                                   labelTemplate="50%" styleClass="p-mt-3" global="false">
+                                    </p:progressBar>
+                                </div>
                             </div>
                         </div>
                     </p:column>

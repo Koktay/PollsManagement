@@ -4,7 +4,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 
 import java.util.Map;
 
-public interface Gamelnterface {
+public interface IGDBInterface {
 
     Map<Integer, String> buscar() throws UnirestException;
 

@@ -1,9 +1,12 @@
 package com.web.pollsmanagement.view;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
+import com.web.pollsmanagement.model.Jogo;
 import com.web.pollsmanagement.model.Poll;
 import com.web.pollsmanagement.model.Usuario;
-import com.web.pollsmanagement.repository.Gamelnterface;
+import com.web.pollsmanagement.repository.IGDBInterface;
+import com.web.pollsmanagement.repository.JogoRepository;
+import com.web.pollsmanagement.repository.PollRepository;
 import com.web.pollsmanagement.service.PollService;
 import com.web.pollsmanagement.service.UsuarioService;
 import com.web.pollsmanagement.util.Assert;
@@ -28,7 +31,7 @@ public class PollMB {
     @Getter
     @Setter
     @Autowired
-    private Gamelnterface gamelnterface;
+    private IGDBInterface IGDBInterface;
 
     @Getter
     @Setter
@@ -48,7 +51,7 @@ public class PollMB {
 
     @Getter
     @Setter
-    private List<Poll> polls;
+    private List<Poll> polls = new ArrayList<>();
 
     @Getter
     @Setter
@@ -64,31 +67,54 @@ public class PollMB {
     @Setter
     private Usuario user = new Usuario();
 
+    @Autowired
+    public JogoRepository jogoRepository;
+
+    @Autowired
+    public PollRepository pollRepository;
+
+    @Getter
+    @Setter
+    private List<Jogo> jogos = new ArrayList<>();
+
+    @Getter
+    @Setter
+    private String jogoVotado;
+
     @PostConstruct
     public void init() throws UnirestException {
-        games = gamelnterface.buscar();
+        games = IGDBInterface.buscar();
         keys.addAll(games.keySet());
         user = userService.findUser();
-        polls = pollService.repository.findAll();
+        polls = pollRepository.findAll();
+        jogos = jogoRepository.findAll();
+        if (jogos.size() < 1) {
+            for (String mp : games.values()) {
+                Jogo jogo = new Jogo();
+                jogo.setNome(mp);
+                jogoRepository.save(jogo);
+            }
+        }
     }
 
-    public void votar() {
-        poll.setVoto(1);
-        poll.setUsuarios(user);
-        poll.setCategoria(categoria);
-        if (!Assert.isNotNullOrEmpty(poll.getTituloLivro())) {
+    public void votar() throws Exception {
+//        poll.setVoto(1);
+//        poll.setUsuarios(user);
+        poll.setJogos(jogos);
+        poll.setTitulo(categoria);
+        if (!Assert.isNotNullOrEmpty(jogoVotado)) {
             FacesContext.getCurrentInstance().addMessage("messages",
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Escolha um filme" +
                             ".",
                             ""));
         } else {
-            pollService.savePoll(poll);
+            poll = pollService.savePoll(poll, user);
+            pollService.votar(poll.getId(), jogoVotado);
         }
     }
 
     public void criar() throws IOException {
         FacesContext.getCurrentInstance().getExternalContext().redirect("votar?categoria=" + categoria);
     }
-
 
 }

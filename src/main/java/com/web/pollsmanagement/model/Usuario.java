@@ -2,6 +2,7 @@ package com.web.pollsmanagement.model;
 
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Usuario {
@@ -16,6 +17,9 @@ public class Usuario {
     private String authority;
 
     private Boolean enabled = true;
+
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "usuario")
+    private List<Poll> polls;
 
     public Long getId() {
         return id;
@@ -57,5 +61,11 @@ public class Usuario {
         this.enabled = enabled;
     }
 
+    public List<Poll> getPolls() {
+        return polls;
+    }
 
+    public void setPolls(List<Poll> polls) {
+        this.polls = polls;
+    }
 }

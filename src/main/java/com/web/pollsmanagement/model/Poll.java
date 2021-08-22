@@ -1,22 +1,23 @@
 package com.web.pollsmanagement.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
 
 @Entity
-public class Poll {
+public class Poll implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String categoria;
+    private String titulo;
 
-    private String tituloLivro;
-
-    private Integer voto;
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, mappedBy = "poll")
+    private List<Jogo> jogos;
 
     @ManyToOne
-    private Usuario usuarios;
+    private Usuario usuario;
 
     public Long getId() {
         return id;
@@ -26,35 +27,27 @@ public class Poll {
         this.id = id;
     }
 
-    public String getCategoria() {
-        return categoria;
+    public String getTitulo() {
+        return titulo;
     }
 
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
-    public String getTituloLivro() {
-        return tituloLivro;
+    public List<Jogo> getJogos() {
+        return jogos;
     }
 
-    public void setTituloLivro(String tituloLivro) {
-        this.tituloLivro = tituloLivro;
+    public void setJogos(List<Jogo> jogos) {
+        this.jogos = jogos;
     }
 
-    public Integer getVoto() {
-        return voto;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setVoto(Integer voto) {
-        this.voto = voto;
-    }
-
-    public Usuario getUsuarios() {
-        return usuarios;
-    }
-
-    public void setUsuarios(Usuario usuarios) {
-        this.usuarios = usuarios;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }
