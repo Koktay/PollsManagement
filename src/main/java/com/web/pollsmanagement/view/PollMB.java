@@ -125,20 +125,19 @@ public class PollMB {
     }
 
     public void votar() throws Exception {
-        poll.setJogos(jogos);
-        poll.setTitulo(categoria);
+//        poll.setJogos(jogos);
+//        poll.setTitulo(categoria);
         if (!Assert.isNotNullOrEmpty(jogoVotado)) {
             FacesContext.getCurrentInstance().addMessage("messages",
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Escolha um filme" +
                             ".",
                             ""));
         } else {
-            if (votarBln.equals(true)) {
-                poll = pollService.savePoll(poll, user);
-                pollService.votar(poll.getId(), jogoVotado);
-            } else {
+//            if (votarBln.equals(true)) {
+                pollService.votar(selectedPoll.getId(), jogoVotado);
+//            } else {
                 pollService.votar(id, jogoVotado);
-            }
+//            }
         }
     }
 
@@ -163,10 +162,15 @@ public class PollMB {
 //            jogos.forEach(j->j.setPoll(pollCriada));
 //            jogoRepository.saveAll(jogos);
 
-            FacesContext.getCurrentInstance().addMessage("messages",
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Poll criado com sucesso!" +
-                            "",
-                            ""));
+            FacesContext.getCurrentInstance().
+                    addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Poll criado com sucesso!", ""));
+//            FacesContext.getCurrentInstance().addMessage("messages",
+//                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Poll criado com sucesso!" +
+//                            "",
+//                            ""));
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+            FacesContext.getCurrentInstance().getExternalContext().redirect("criar");
+
         }catch (Exception e){
             FacesContext.getCurrentInstance().addMessage("messages",
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao criar Poll" +
