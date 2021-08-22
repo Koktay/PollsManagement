@@ -7,6 +7,7 @@ import com.web.pollsmanagement.model.Usuario;
 import com.web.pollsmanagement.repository.IGDBInterface;
 import com.web.pollsmanagement.repository.JogoRepository;
 import com.web.pollsmanagement.repository.PollRepository;
+import com.web.pollsmanagement.repository.UsuariosRepository;
 import com.web.pollsmanagement.service.PollService;
 import com.web.pollsmanagement.service.UsuarioService;
 import com.web.pollsmanagement.util.Assert;
@@ -21,9 +22,8 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 @Scope("view")
@@ -94,19 +94,33 @@ public class PollMB {
     @Setter
     private Long id;
 
+    @Autowired
+    public UsuariosRepository usuariosRepository;
+
+    @Getter
+    @Setter
+    private List<Jogo> selectGame = new ArrayList<>();
+
+
+    @Getter
+    @Setter
+    private Poll pollCriada = new Poll();
+
+
     @PostConstruct
     public void init() throws UnirestException {
         games = IGDBInterface.buscar();
         keys.addAll(games.keySet());
         user = userService.findUser();
         polls = pollRepository.findAll();
-        jogos = jogoRepository.findAll();
+        polls.forEach(a -> setSelectGame(getJogos()));
         if (jogos.size() < 1) {
             for (String mp : games.values()) {
                 Jogo jogo = new Jogo();
                 jogo.setNome(mp);
                 jogoRepository.save(jogo);
             }
+            jogos = jogoRepository.findAll();
         }
     }
 
@@ -128,19 +142,37 @@ public class PollMB {
         }
     }
 
-    public void criar() throws IOException {
-        polls.forEach(a -> categorias.add(a.getTitulo()));
+    public void criar() {
 
-        if (!Assert.isEmpty(polls)) {
-            if (categorias.contains(categoria)) {
-                FacesContext.getCurrentInstance().addMessage("messages",
-                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Categoria existente!" +
-                                "",
-                                ""));
-            } else
-                FacesContext.getCurrentInstance().getExternalContext().redirect("votar?categoria=" + categoria);
-        } else
-            FacesContext.getCurrentInstance().getExternalContext().redirect("votar?categoria=" + categoria);
+        try {
+            Poll poll = new Poll();
+            poll.setTitulo(categoria);
+            if(jogos.size()>0) {
+                jogos.forEach(j -> j.setId(null));
+            }
+            poll.setJogos(jogos);
+
+            pollCriada = pollService.savePoll(poll, user);
+
+//            Jogo jogo = new Jogo();
+//            jogo.setPoll(poll);
+//
+//            jogoRepository.save(jogo);
+
+//            poll.setJogos(jogos);
+//            jogos.forEach(j->j.setPoll(pollCriada));
+//            jogoRepository.saveAll(jogos);
+
+            FacesContext.getCurrentInstance().addMessage("messages",
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Poll criado com sucesso!" +
+                            "",
+                            ""));
+        }catch (Exception e){
+            FacesContext.getCurrentInstance().addMessage("messages",
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao criar Poll" +
+                            ".",
+                            ""));
+        }
     }
 
     public void votarSelected() throws IOException {

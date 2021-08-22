@@ -31,9 +31,9 @@ public class PollService {
 
         poll.setUsuario(user);
         Poll savedPoll = pollRepository.save(poll);
-        poll.getJogos().stream().forEach(jogo -> {
-            jogo.setPoll(savedPoll);
-            jogoRepository.save(jogo);
+        poll.getJogos().forEach(jg -> {
+            jg.setPoll(savedPoll);
+            jogoRepository.save(jg);
         });
 
         return savedPoll;
@@ -50,7 +50,7 @@ public class PollService {
             jogoRepository.save(jogo);
             pollRepository.save(poll);
         } else {
-            throw new Exception("Id do jogo não é único!");
+            throw new Exception("Nome do jogo não é único!");
         }
     }
 }

@@ -52,7 +52,7 @@
                     <p:column rendered="#{not empty pollMB.selectedPoll}">
                         <div class="product">
                             <div class="product-grid-item border-0" style="margin-bottom: 0">
-                                <p:dataTable var="vote" value="#{pollMB.jogos}" rowKey="#{vote.id}"
+                                <p:dataTable var="vote" value="#{pollMB.selectGame}" rowKey="#{vote.id}"
                                              selection="#{pollMB.selectedPoll}" selectionMode="single">
 
                                     <p:column>
