@@ -97,9 +97,7 @@ public class PollMB {
         }
     }
 
-    public void votar() throws Exception {
-//        poll.setVoto(1);
-//        poll.setUsuarios(user);
+    public void votar() {
         poll.setJogos(jogos);
         poll.setTitulo(categoria);
         if (!Assert.isNotNullOrEmpty(jogoVotado)) {
