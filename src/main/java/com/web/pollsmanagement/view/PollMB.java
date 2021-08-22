@@ -12,6 +12,7 @@ import com.web.pollsmanagement.service.UsuarioService;
 import com.web.pollsmanagement.util.Assert;
 import lombok.Getter;
 import lombok.Setter;
+import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -55,7 +56,7 @@ public class PollMB {
 
     @Getter
     @Setter
-    private Poll selectedPoll;
+    private Poll selectedPoll = new Poll();
 
     @Autowired
     public PollService pollService;
@@ -89,6 +90,10 @@ public class PollMB {
     @Setter
     private Boolean votarBln = true;
 
+    @Getter
+    @Setter
+    private Long id;
+
     @PostConstruct
     public void init() throws UnirestException {
         games = IGDBInterface.buscar();
@@ -116,8 +121,10 @@ public class PollMB {
         } else {
             if (votarBln.equals(true)) {
                 poll = pollService.savePoll(poll, user);
+                pollService.votar(poll.getId(), jogoVotado);
+            } else {
+                pollService.votar(id, jogoVotado);
             }
-            pollService.votar(poll.getId(), jogoVotado);
         }
     }
 
@@ -137,7 +144,12 @@ public class PollMB {
     }
 
     public void votarSelected() throws IOException {
-        FacesContext.getCurrentInstance().getExternalContext().redirect("votar?categoria=" + selectedPoll.getTitulo() + "&votarBln=" + "false");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("votar?categoria=" + selectedPoll.getTitulo() + "&votarBln=" + false + "&id=" + selectedPoll.getId());
+    }
+
+    public void onRowSelect(SelectEvent event) throws IOException {
+        Poll poll = (Poll) event.getObject();
+        FacesContext.getCurrentInstance().getExternalContext().redirect("votar?id=" + poll.getId() + "&votarBln=" + false + "&categoria=" + poll.getTitulo());
     }
 
 }

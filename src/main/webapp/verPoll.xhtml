@@ -26,6 +26,8 @@
                     Click com o Direito para Ver Opções
                 </f:facet>
 
+                <p:ajax event="rowSelect" listener="#{pollMB.onRowSelect}"/>
+
                 <p:column headerText="Título">
                     <h:outputText value="#{poll.titulo}"/>
                 </p:column>
