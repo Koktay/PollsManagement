@@ -26,14 +26,11 @@
                     Click com o Direito para Ver Opções
                 </f:facet>
 
-                <p:column headerText="Id">
-                    <h:outputText value="#{poll.id}"/>
+                <p:column headerText="Título">
+                    <h:outputText value="#{poll.titulo}"/>
                 </p:column>
                 <p:column headerText="Criador">
                     <h:outputText value="#{poll.usuario.nome}"/>
-                </p:column>
-                <p:column headerText="Categoria">
-                    <h:outputText value="#{poll.titulo}"/>
                 </p:column>
             </p:dataTable>
 
@@ -53,66 +50,18 @@
                     <p:column rendered="#{not empty pollMB.selectedPoll}">
                         <div class="product">
                             <div class="product-grid-item border-0" style="margin-bottom: 0">
-                                <div>
-                                    <h:outputLabel value="#{pollMB.games.get(pollMB.keys.get(0))}"/>
-                                    <p:progressBar widgetVar="pbAjax" ajax="true" value="50"
-                                                   labelTemplate="50%" styleClass="p-mt-3" global="false">
-                                    </p:progressBar>
-                                </div>
-                                <div style="margin-top: 20px">
-                                    <h:outputLabel value="#{pollMB.games.get(pollMB.keys.get(1))}"/>
-                                    <p:progressBar widgetVar="pbAjax" ajax="true" value="50"
-                                                   labelTemplate="50%" styleClass="p-mt-3" global="false">
-                                    </p:progressBar>
-                                </div>
-                                <div style="margin-top: 20px">
-                                    <h:outputLabel value="#{pollMB.games.get(pollMB.keys.get(2))}"/>
-                                    <p:progressBar widgetVar="pbAjax" ajax="true" value="50"
-                                                   labelTemplate="50%" styleClass="p-mt-3" global="false">
-                                    </p:progressBar>
-                                </div>
-                                <div style="margin-top: 20px">
-                                    <h:outputLabel value="#{pollMB.games.get(pollMB.keys.get(3))}"/>
-                                    <p:progressBar widgetVar="pbAjax" ajax="true" value="50"
-                                                   labelTemplate="50%" styleClass="p-mt-3" global="false">
-                                    </p:progressBar>
-                                </div>
-                                <div style="margin-top: 20px">
-                                    <h:outputLabel value="#{pollMB.games.get(pollMB.keys.get(4))}"/>
-                                    <p:progressBar widgetVar="pbAjax" ajax="true" value="50"
-                                                   labelTemplate="50%" styleClass="p-mt-3" global="false">
-                                    </p:progressBar>
-                                </div>
-                                <div style="margin-top: 20px">
-                                    <h:outputLabel value="#{pollMB.games.get(pollMB.keys.get(5))}"/>
-                                    <p:progressBar widgetVar="pbAjax" ajax="true" value="50"
-                                                   labelTemplate="50%" styleClass="p-mt-3" global="false">
-                                    </p:progressBar>
-                                </div>
-                                <div style="margin-top: 20px">
-                                    <h:outputLabel value="#{pollMB.games.get(pollMB.keys.get(6))}"/>
-                                    <p:progressBar widgetVar="pbAjax" ajax="true" value="50"
-                                                   labelTemplate="50%" styleClass="p-mt-3" global="false">
-                                    </p:progressBar>
-                                </div>
-                                <div style="margin-top: 20px">
-                                    <h:outputLabel value="#{pollMB.games.get(pollMB.keys.get(7))}"/>
-                                    <p:progressBar widgetVar="pbAjax" ajax="true" value="50"
-                                                   labelTemplate="50%" styleClass="p-mt-3" global="false">
-                                    </p:progressBar>
-                                </div>
-                                <div style="margin-top: 20px">
-                                    <h:outputLabel value="#{pollMB.games.get(pollMB.keys.get(8))}"/>
-                                    <p:progressBar widgetVar="pbAjax" ajax="true" value="50"
-                                                   labelTemplate="50%" styleClass="p-mt-3" global="false">
-                                    </p:progressBar>
-                                </div>
-                                <div style="margin-top: 20px">
-                                    <h:outputLabel value="#{pollMB.games.get(pollMB.keys.get(9))}"/>
-                                    <p:progressBar widgetVar="pbAjax" ajax="true" value="50"
-                                                   labelTemplate="50%" styleClass="p-mt-3" global="false">
-                                    </p:progressBar>
-                                </div>
+                                <p:dataTable var="vote" value="#{pollMB.jogos}" rowKey="#{vote.id}"
+                                             selection="#{pollMB.selectedPoll}" selectionMode="single">
+
+                                    <p:column>
+                                        <h:outputLabel value="#{vote.nome}"/>
+                                        <p:progressBar widgetVar="pbAjax" ajax="true" value="#{vote.voto}"
+                                                       labelTemplate="{value}%" styleClass="p-mt-3" global="false">
+                                        </p:progressBar>
+                                    </p:column>
+
+                                </p:dataTable>
+
                             </div>
                         </div>
                     </p:column>

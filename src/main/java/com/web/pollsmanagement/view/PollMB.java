@@ -85,6 +85,10 @@ public class PollMB {
     @Setter
     private List<String> categorias = new ArrayList<>();
 
+    @Getter
+    @Setter
+    private Boolean votarBln = true;
+
     @PostConstruct
     public void init() throws UnirestException {
         games = IGDBInterface.buscar();
@@ -110,7 +114,9 @@ public class PollMB {
                             ".",
                             ""));
         } else {
-            poll = pollService.savePoll(poll, user);
+            if (votarBln.equals(true)) {
+                poll = pollService.savePoll(poll, user);
+            }
             pollService.votar(poll.getId(), jogoVotado);
         }
     }
@@ -131,7 +137,7 @@ public class PollMB {
     }
 
     public void votarSelected() throws IOException {
-        FacesContext.getCurrentInstance().getExternalContext().redirect("votar?categoria=" + selectedPoll.getTitulo());
+        FacesContext.getCurrentInstance().getExternalContext().redirect("votar?categoria=" + selectedPoll.getTitulo() + "&votarBln=" + "false");
     }
 
 }

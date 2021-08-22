@@ -1,7 +1,5 @@
 package com.web.pollsmanagement.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
