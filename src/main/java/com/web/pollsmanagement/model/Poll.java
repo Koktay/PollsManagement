@@ -19,6 +19,8 @@ public class Poll implements Serializable {
     @ManyToOne
     private Usuario usuario;
 
+    private String restricao;
+
     public Long getId() {
         return id;
     }
@@ -49,5 +51,13 @@ public class Poll implements Serializable {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public String getRestricao() {
+        return restricao;
+    }
+
+    public void setRestricao(String restricao) {
+        this.restricao = restricao;
     }
 }

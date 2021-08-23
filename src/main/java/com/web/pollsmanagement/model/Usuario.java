@@ -1,6 +1,9 @@
 package com.web.pollsmanagement.model;
 
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -20,6 +23,8 @@ public class Usuario {
 
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "usuario")
     private List<Poll> polls;
+
+    private Integer idade;
 
     public Long getId() {
         return id;
@@ -67,5 +72,13 @@ public class Usuario {
 
     public void setPolls(List<Poll> polls) {
         this.polls = polls;
+    }
+
+    public Integer getIdade() {
+        return idade;
+    }
+
+    public void setIdade(Integer idade) {
+        this.idade = idade;
     }
 }

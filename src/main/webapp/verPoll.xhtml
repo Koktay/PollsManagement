@@ -20,6 +20,7 @@
 
     <div class="card">
         <h:form id="form">
+            <p:growl id="growl" showDetail="true"/>
             <p:dataTable id="polls" var="poll" value="#{pollMB.polls}" rowKey="#{poll.id}"
                          selection="#{pollMB.selectedPoll}" selectionMode="single">
                 <f:facet name="header">
@@ -39,7 +40,7 @@
             <p:contextMenu for="polls">
                 <p:menuitem value="Ver" update="pollDetail" icon="pi pi-search"
                             oncomplete="PF('pollDialog').show()"/>
-                <p:menuitem value="Votar" update="polls" icon="pi pi-check"
+                <p:menuitem value="Votar" update="polls growl" icon="pi pi-check"
                             action="#{pollMB.votarSelected}"/>
             </p:contextMenu>
 

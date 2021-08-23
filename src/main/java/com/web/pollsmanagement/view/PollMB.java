@@ -87,6 +87,14 @@ public class PollMB {
     @Setter
     private Poll selectedHistory;
 
+    @Getter
+    @Setter
+    private String selectedRst;
+
+    @Getter
+    @Setter
+    private List<String> restricoes = new ArrayList<>();
+
 
     @PostConstruct
     public void init() throws UnirestException {
@@ -104,12 +112,13 @@ public class PollMB {
             jogos = jogoRepository.buscarJogos(games.size());
         }
         historico = pollRepository.historico(user.getId());
+        loadRestricoes();
     }
 
     public void votar() throws Exception {
         if (!Assert.isNotNullOrEmpty(jogoVotado)) {
             FacesContext.getCurrentInstance().addMessage("messages",
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Escolha um filme" +
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Escolha um jogo" +
                             ".",
                             ""));
         } else {
@@ -126,7 +135,7 @@ public class PollMB {
 
             if (categoria.isEmpty()) {
                 FacesContext.getCurrentInstance().
-                        addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Preencha o campo!", ""));
+                        addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Preencha o Título!", ""));
             } else if (titulos.contains(categoria)) {
                 FacesContext.getCurrentInstance().
                         addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Categoria existente!", ""));
@@ -134,6 +143,7 @@ public class PollMB {
 
                 Poll poll = new Poll();
                 poll.setTitulo(categoria);
+                poll.setRestricao(selectedRst);
 
                 List<Jogo> jogoList = new ArrayList<>(jogos);
                 if (polls.size() > 0) {
@@ -160,14 +170,48 @@ public class PollMB {
     }
 
     public void votarSelected() throws IOException {
-        FacesContext.getCurrentInstance().getExternalContext().redirect("votar?categoria=" + selectedPoll.getTitulo()
-                + "&id=" + selectedPoll.getId());
+
+        if (selectedPoll != null) {
+
+            String rst = selectedPoll.getRestricao();
+            String privilegio = user.getAuthority();
+            Integer idade = user.getIdade();
+
+
+            if (rst.equals("Usuários")) {
+                if (privilegio.equals("ROLE_USER")) {
+                    FacesContext.getCurrentInstance().
+                            addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Poll restringida para Usuários!", ""));
+                }
+            } else if (rst.equals("Administradores")) {
+
+
+                if (privilegio.equals("ROLE_ADMIN")) {
+                    FacesContext.getCurrentInstance().
+                            addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Poll restringida para Administradores!", ""));
+                }
+            } else if (rst.equals("Menores de Idade")) {
+
+                if (idade < 18) {
+                    FacesContext.getCurrentInstance().
+                            addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Poll restringida para Menores de Idade!", ""));
+                }
+            } else {
+
+                FacesContext.getCurrentInstance().getExternalContext().redirect("votar?categoria=" + selectedPoll.getTitulo()
+                        + "&id=" + selectedPoll.getId());
+            }
+        } else {
+            FacesContext.getCurrentInstance().
+                    addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Seleccione a linha para votar!", ""));
+        }
+
     }
 
     public void delPoll() {
 
         try {
-            if(selectedHistory != null){
+            if (selectedHistory != null) {
                 pollRepository.delete(selectedHistory);
                 FacesContext.getCurrentInstance().
                         addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Poll eliminada com sucesso!", ""));
@@ -182,6 +226,17 @@ public class PollMB {
                     addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao eliminar!", ""));
             e.printStackTrace();
         }
+    }
+
+    public void loadRestricoes() {
+
+        List<String> rst = new ArrayList<>();
+        rst.add("Usuários");
+        rst.add("Administradores");
+        rst.add("Menores de Idade");
+
+        restricoes.addAll(rst);
+
     }
 
 }
