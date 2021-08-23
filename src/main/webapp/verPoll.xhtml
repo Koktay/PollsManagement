@@ -26,20 +26,20 @@
                     Click com o Direito para Ver Opções
                 </f:facet>
 
-                <p:ajax event="rowSelect" listener="#{pollMB.onRowSelect}"/>
-
                 <p:column headerText="Título">
                     <h:outputText value="#{poll.titulo}"/>
                 </p:column>
+
                 <p:column headerText="Criador">
                     <h:outputText value="#{poll.usuario.nome}"/>
                 </p:column>
+
             </p:dataTable>
 
             <p:contextMenu for="polls">
                 <p:menuitem value="Ver" update="pollDetail" icon="pi pi-search"
                             oncomplete="PF('pollDialog').show()"/>
-                <p:menuitem value="Votar" update="pollDetail" icon="pi pi-check"
+                <p:menuitem value="Votar" update="polls" icon="pi pi-check"
                             action="#{pollMB.votarSelected}"/>
             </p:contextMenu>
 

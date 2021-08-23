@@ -56,7 +56,7 @@ public class PollMB {
 
     @Getter
     @Setter
-    private Poll selectedPoll = new Poll();
+    private Poll selectedPoll;
 
     @Autowired
     public PollService pollService;
@@ -178,7 +178,8 @@ public class PollMB {
     }
 
     public void votarSelected() throws IOException {
-        FacesContext.getCurrentInstance().getExternalContext().redirect("votar?categoria=" + selectedPoll.getTitulo());
+        FacesContext.getCurrentInstance().getExternalContext().redirect("votar?categoria=" + selectedPoll.getTitulo()
+                + "&id=" + selectedPoll.getId());
     }
 
     public void onRowSelect(SelectEvent event) throws IOException {
