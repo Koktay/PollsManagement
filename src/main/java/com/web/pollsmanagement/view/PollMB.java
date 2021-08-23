@@ -88,10 +88,6 @@ public class PollMB {
 
     @Getter
     @Setter
-    private Boolean votarBln = true;
-
-    @Getter
-    @Setter
     private Long id;
 
     @Autowired
@@ -135,7 +131,7 @@ public class PollMB {
                             ""));
         } else {
 //            if (votarBln.equals(true)) {
-                pollService.votar(selectedPoll.getId(), jogoVotado);
+                pollService.votar(id, jogoVotado);
 //            } else {
 //            }
         }
@@ -182,12 +178,12 @@ public class PollMB {
     }
 
     public void votarSelected() throws IOException {
-        FacesContext.getCurrentInstance().getExternalContext().redirect("votar?categoria=" + selectedPoll.getTitulo() + "&votarBln=" + false + "&id=" + selectedPoll.getId());
+        FacesContext.getCurrentInstance().getExternalContext().redirect("votar?categoria=" + selectedPoll.getTitulo());
     }
 
     public void onRowSelect(SelectEvent event) throws IOException {
         Poll poll = (Poll) event.getObject();
-        FacesContext.getCurrentInstance().getExternalContext().redirect("votar?id=" + poll.getId() + "&votarBln=" + false + "&categoria=" + poll.getTitulo());
+        FacesContext.getCurrentInstance().getExternalContext().redirect("votar?id=" + poll.getId() + "&categoria=" + poll.getTitulo());
     }
 
 }
