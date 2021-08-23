@@ -48,7 +48,7 @@ public class PollService {
             jogoRepository.save(jogo);
             pollRepository.save(poll);
         } else {
-            throw new Exception("Nome do jogo não é único!");
+            throw new Exception("Erro ao votar!");
         }
     }
 }

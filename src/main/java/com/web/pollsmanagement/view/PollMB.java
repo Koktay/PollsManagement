@@ -7,13 +7,11 @@ import com.web.pollsmanagement.model.Usuario;
 import com.web.pollsmanagement.repository.IGDBInterface;
 import com.web.pollsmanagement.repository.JogoRepository;
 import com.web.pollsmanagement.repository.PollRepository;
-import com.web.pollsmanagement.repository.UsuariosRepository;
 import com.web.pollsmanagement.service.PollService;
 import com.web.pollsmanagement.service.UsuarioService;
 import com.web.pollsmanagement.util.Assert;
 import lombok.Getter;
 import lombok.Setter;
-import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -23,7 +21,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Component
 @Scope("view")
@@ -82,10 +79,6 @@ public class PollMB {
     @Setter
     private Long id;
 
-    @Getter
-    @Setter
-    private List<Jogo> selectGame = new ArrayList<>();
-
 
     @PostConstruct
     public void init() throws UnirestException {
@@ -93,7 +86,6 @@ public class PollMB {
         keys.addAll(games.keySet());
         user = userService.findUser();
         polls = pollRepository.findAll();
-        polls.forEach(a -> setSelectGame(getJogos()));
         jogos = jogoRepository.buscarJogos(games.size());
         if (jogos.size() < 1) {
             for (String mp : games.values()) {
@@ -112,32 +104,42 @@ public class PollMB {
                             ".",
                             ""));
         } else {
-                pollService.votar(id, jogoVotado);
+            pollService.votar(id, jogoVotado);
         }
     }
 
     public void criar() {
 
         try {
-            Poll poll = new Poll();
-            poll.setTitulo(categoria);
 
-            List<Jogo> jogoList = new ArrayList<>(jogos);
-            if(polls.size() > 0) {
-                jogoList.forEach(j -> j.setId(null));
+            Set<String> titulos = new HashSet<>();
+            polls.forEach(p -> titulos.add(p.getTitulo()));
+
+            if (titulos.contains(categoria)) {
+                FacesContext.getCurrentInstance().
+                        addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Categoria existente!", ""));
+            } else {
+
+                Poll poll = new Poll();
+                poll.setTitulo(categoria);
+
+                List<Jogo> jogoList = new ArrayList<>(jogos);
+                if (polls.size() > 0) {
+                    jogoList.forEach(j -> j.setId(null));
+                }
+                poll.setJogos(jogoList);
+
+                pollService.savePoll(poll, user);
+
+
+                FacesContext.getCurrentInstance().
+                        addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Poll criado com sucesso!", ""));
+
+                FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+                FacesContext.getCurrentInstance().getExternalContext().redirect("criar");
+
             }
-            poll.setJogos(jogoList);
-
-            pollService.savePoll(poll, user);
-
-
-            FacesContext.getCurrentInstance().
-                    addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Poll criado com sucesso!", ""));
-
-            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-            FacesContext.getCurrentInstance().getExternalContext().redirect("criar");
-
-        }catch (Exception e){
+        } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage("messages",
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao criar Poll" +
                             ".",
