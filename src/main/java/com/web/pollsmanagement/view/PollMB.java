@@ -115,7 +115,10 @@ public class PollMB {
             Set<String> titulos = new HashSet<>();
             polls.forEach(p -> titulos.add(p.getTitulo()));
 
-            if (titulos.contains(categoria)) {
+            if (categoria.isEmpty()) {
+                FacesContext.getCurrentInstance().
+                        addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Preencha o campo!", ""));
+            } else if (titulos.contains(categoria)) {
                 FacesContext.getCurrentInstance().
                         addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Categoria existente!", ""));
             } else {
