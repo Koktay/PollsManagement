@@ -12,6 +12,7 @@ public class HomeController {
     static final String CRIAR = "criarPoll.xhtml";
     static final String VOTAR = "votarPoll.xhtml";
     static final String VER = "verPoll.xhtml";
+    static final String HISTORICO = "historico.xhtml";
 
     @GetMapping
     public String init(){
@@ -31,5 +32,10 @@ public class HomeController {
     @RequestMapping("/ver")
     public String ver(){
         return VER;
+    }
+
+    @RequestMapping("/historico")
+    public String historico(){
+        return HISTORICO;
     }
 }

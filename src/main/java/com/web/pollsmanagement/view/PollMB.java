@@ -79,6 +79,14 @@ public class PollMB {
     @Setter
     private Long id;
 
+    @Getter
+    @Setter
+    private List<Poll> historico = new ArrayList<>();
+
+    @Getter
+    @Setter
+    private Poll selectedHistory;
+
 
     @PostConstruct
     public void init() throws UnirestException {
@@ -95,6 +103,7 @@ public class PollMB {
             }
             jogos = jogoRepository.buscarJogos(games.size());
         }
+        historico = pollRepository.historico(user.getId());
     }
 
     public void votar() throws Exception {
@@ -155,5 +164,24 @@ public class PollMB {
                 + "&id=" + selectedPoll.getId());
     }
 
+    public void delPoll() {
+
+        try {
+            if(selectedHistory != null){
+                pollRepository.delete(selectedHistory);
+                FacesContext.getCurrentInstance().
+                        addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Poll eliminada com sucesso!", ""));
+                FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+                FacesContext.getCurrentInstance().getExternalContext().redirect("historico");
+            } else {
+                FacesContext.getCurrentInstance().
+                        addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Seleccione a linha antes de eliminar!", ""));
+            }
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().
+                    addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao eliminar!", ""));
+            e.printStackTrace();
+        }
+    }
 
 }

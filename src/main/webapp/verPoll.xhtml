@@ -46,7 +46,7 @@
             <p:dialog widgetVar="pollDialog" modal="true" showEffect="fade"
                       hideEffect="fade" resizable="false" width="625" height="400">
                 <f:facet name="header">
-                    <p:outputPanel autoUpdate="true">#{pollMB.selectedPoll.titulo}</p:outputPanel>
+                    #{pollMB.selectedPoll.titulo}
                 </f:facet>
                 <p:outputPanel id="pollDetail" style="text-align:center;">
                     <p:column rendered="#{not empty pollMB.selectedPoll}">

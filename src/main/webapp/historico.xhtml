@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <title>Historico</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <h:outputStylesheet library="css" name="/bootstrap.min.css"/>
+</h:head>
+<h:body>
+
+    <div id="header">
+        <ui:insert name="header">
+            <ui:include src="/header.xhtml"/>
+        </ui:insert>
+    </div>
+
+
+    <div class="card">
+        <h:form id="form">
+            <p:growl id="growl" showDetail="true" />
+            <p:dataTable id="polls" var="hist" value="#{pollMB.historico}" rowKey="#{hist.id}"
+                         selection="#{pollMB.selectedHistory}" selectionMode="single">
+                <f:facet name="header">
+                    HISTÓRICO
+                </f:facet>
+
+                <p:column headerText="Título">
+                    <h:outputText value="#{hist.titulo}"/>
+                </p:column>
+
+                <p:column headerText="Acção">
+                    <p:commandButton value="Eliminar" styleClass="ui-button-danger" action="#{pollMB.delPoll()}"
+                                     update="@form" process="@form"/>
+                </p:column>
+
+            </p:dataTable>
+
+        </h:form>
+    </div>
+
+</h:body>
+</html>
