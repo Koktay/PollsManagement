@@ -2,7 +2,7 @@ package com.web.pollsmanagement.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
+import java.util.*;
 
 @Entity
 public class Poll implements Serializable {
@@ -20,6 +20,8 @@ public class Poll implements Serializable {
     private Usuario usuario;
 
     private String restricao;
+
+    ArrayList<String> votantes = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -59,5 +61,13 @@ public class Poll implements Serializable {
 
     public void setRestricao(String restricao) {
         this.restricao = restricao;
+    }
+
+    public ArrayList<String> getVotantes() {
+        return votantes;
+    }
+
+    public void setVotantes(ArrayList<String> votantes) {
+        this.votantes = votantes;
     }
 }

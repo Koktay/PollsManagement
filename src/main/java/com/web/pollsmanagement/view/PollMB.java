@@ -120,7 +120,11 @@ public class PollMB {
             FacesContext.getCurrentInstance().
                     addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Seleccione um jogo!", ""));
         } else {
-            pollService.votar(id, jogoVotado);
+            pollService.votar(id, jogoVotado, user.getNome());
+            FacesContext.getCurrentInstance().
+                    addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso!", ""));
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+            FacesContext.getCurrentInstance().getExternalContext().redirect("ver");
         }
     }
 
@@ -171,33 +175,43 @@ public class PollMB {
 
         if (selectedPoll != null) {
 
-            String rst = selectedPoll.getRestricao();
-            String privilegio = user.getAuthority();
-            Integer idade = user.getIdade();
+            ArrayList<String> votantes = new ArrayList<>(selectedPoll.getVotantes());
+            boolean val = votantes.contains(user.getNome());
 
+            if (val) {
+                FacesContext.getCurrentInstance().
+                        addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Não pode votar mais de uma vez!", ""));
 
-            if (rst.equals("Usuários")) {
-                if (privilegio.equals("ROLE_USER")) {
-                    FacesContext.getCurrentInstance().
-                            addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Poll restringida para Usuários!", ""));
-                }
-            } else if (rst.equals("Administradores")) {
-
-
-                if (privilegio.equals("ROLE_ADMIN")) {
-                    FacesContext.getCurrentInstance().
-                            addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Poll restringida para Administradores!", ""));
-                }
-            } else if (rst.equals("Menores de Idade")) {
-
-                if (idade < 18) {
-                    FacesContext.getCurrentInstance().
-                            addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Poll restringida para Menores de Idade!", ""));
-                }
             } else {
 
-                FacesContext.getCurrentInstance().getExternalContext().redirect("votar?categoria=" + selectedPoll.getTitulo()
-                        + "&id=" + selectedPoll.getId());
+                String rst = selectedPoll.getRestricao();
+                String privilegio = user.getAuthority();
+                Integer idade = user.getIdade();
+
+
+                if (rst.equals("Usuários")) {
+                    if (privilegio.equals("ROLE_USER")) {
+                        FacesContext.getCurrentInstance().
+                                addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Poll restringida para Usuários!", ""));
+                    }
+                } else if (rst.equals("Administradores")) {
+
+
+                    if (privilegio.equals("ROLE_ADMIN")) {
+                        FacesContext.getCurrentInstance().
+                                addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Poll restringida para Administradores!", ""));
+                    }
+                } else if (rst.equals("Menores de Idade")) {
+
+                    if (idade < 18) {
+                        FacesContext.getCurrentInstance().
+                                addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Poll restringida para Menores de Idade!", ""));
+                    }
+                } else {
+
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("votar?categoria=" + selectedPoll.getTitulo()
+                            + "&id=" + selectedPoll.getId());
+                }
             }
         } else {
             FacesContext.getCurrentInstance().
@@ -212,7 +226,7 @@ public class PollMB {
             if (selectedHistory != null) {
                 pollRepository.delete(selectedHistory);
                 FacesContext.getCurrentInstance().
-                        addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Poll eliminada com sucesso!", ""));
+                        addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Poll eliminado com sucesso!", ""));
                 FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
                 FacesContext.getCurrentInstance().getExternalContext().redirect("historico");
             } else {

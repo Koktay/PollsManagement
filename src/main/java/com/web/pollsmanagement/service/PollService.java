@@ -38,7 +38,7 @@ public class PollService {
     }
 
     @Transactional
-    public void votar(Long id, String nomeJogo) throws Exception {
+    public void votar(Long id, String nomeJogo, String votante) throws Exception {
         Poll poll = pollRepository.getById(id);
 
         List<Jogo> jogos = poll.getJogos().stream().filter(jogo -> Objects.equals(jogo.getNome(), nomeJogo)).collect(Collectors.toList());
@@ -46,6 +46,7 @@ public class PollService {
             Jogo jogo = jogos.get(0);
             jogo.setVoto(jogo.getVoto() + 1);
             jogoRepository.save(jogo);
+            poll.getVotantes().add(votante);
             pollRepository.save(poll);
         } else {
             throw new Exception("Erro ao votar!");
