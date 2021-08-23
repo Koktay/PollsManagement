@@ -114,13 +114,14 @@ public class PollMB {
         user = userService.findUser();
         polls = pollRepository.findAll();
         polls.forEach(a -> setSelectGame(getJogos()));
+        jogos = jogoRepository.buscarJogos(games.size());
         if (jogos.size() < 1) {
             for (String mp : games.values()) {
                 Jogo jogo = new Jogo();
                 jogo.setNome(mp);
                 jogoRepository.save(jogo);
             }
-            jogos = jogoRepository.findAll();
+            jogos = jogoRepository.buscarJogos(games.size());
         }
     }
 
@@ -136,7 +137,6 @@ public class PollMB {
 //            if (votarBln.equals(true)) {
                 pollService.votar(selectedPoll.getId(), jogoVotado);
 //            } else {
-                pollService.votar(id, jogoVotado);
 //            }
         }
     }
@@ -146,10 +146,12 @@ public class PollMB {
         try {
             Poll poll = new Poll();
             poll.setTitulo(categoria);
-            if(jogos.size()>0) {
-                jogos.forEach(j -> j.setId(null));
+
+            List<Jogo> jogoList = new ArrayList<>(jogos);
+            if(polls.size() > 0) {
+                jogoList.forEach(j -> j.setId(null));
             }
-            poll.setJogos(jogos);
+            poll.setJogos(jogoList);
 
             pollCriada = pollService.savePoll(poll, user);
 
