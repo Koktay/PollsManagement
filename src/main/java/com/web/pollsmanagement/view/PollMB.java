@@ -189,29 +189,31 @@ public class PollMB {
                 Integer idade = user.getIdade();
 
 
-                if (rst.equals("Usuários")) {
-                    if (privilegio.equals("ROLE_USER")) {
-                        FacesContext.getCurrentInstance().
-                                addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Poll restringida para Usuários!", ""));
-                    }
-                } else if (rst.equals("Administradores")) {
+                if (rst.equals("Usuários") && privilegio.equals("ROLE_USER")) {
+                    FacesContext.getCurrentInstance().
+                            addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Poll restringida para Usuários!", ""));
+                    FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("ver");
 
+                } else if (rst.equals("Administradores") && privilegio.equals("ROLE_ADMIN")) {
 
-                    if (privilegio.equals("ROLE_ADMIN")) {
-                        FacesContext.getCurrentInstance().
-                                addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Poll restringida para Administradores!", ""));
-                    }
-                } else if (rst.equals("Menores de Idade")) {
+                    FacesContext.getCurrentInstance().
+                            addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Poll restringida para Administradores!", ""));
+                    FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("ver");
 
-                    if (idade < 18) {
-                        FacesContext.getCurrentInstance().
-                                addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Poll restringida para Menores de Idade!", ""));
-                    }
+                } else if (rst.equals("Menores de Idade") && idade < 18) {
+
+                    FacesContext.getCurrentInstance().
+                            addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Poll restringida para Menores de Idade!", ""));
+                    FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("ver");
+
                 } else {
-
                     FacesContext.getCurrentInstance().getExternalContext().redirect("votar?categoria=" + selectedPoll.getTitulo()
                             + "&id=" + selectedPoll.getId());
                 }
+
             }
         } else {
             FacesContext.getCurrentInstance().
