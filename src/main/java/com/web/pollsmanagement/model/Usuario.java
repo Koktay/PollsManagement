@@ -1,9 +1,6 @@
 package com.web.pollsmanagement.model;
 
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.List;
 
