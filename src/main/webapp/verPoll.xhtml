@@ -38,14 +38,15 @@
             </p:dataTable>
 
             <p:contextMenu for="polls">
-                <p:menuitem value="Ver" update="pollDetail" icon="pi pi-search"
+                <p:menuitem value="Ver" update="myDialog" icon="pi pi-search"
                             oncomplete="PF('pollDialog').show()"/>
                 <p:menuitem value="Votar" update="polls growl" icon="pi pi-check"
                             action="#{pollMB.votarSelected}"/>
             </p:contextMenu>
 
             <p:dialog widgetVar="pollDialog" modal="true" showEffect="fade"
-                      hideEffect="fade" resizable="false" width="625" height="400">
+                      hideEffect="fade" resizable="false" width="625" height="400" id="myDialog">
+                <p:ajax event="close" update=":form" listener="#{pollMB.refresh}" />
                 <f:facet name="header">
                     #{pollMB.selectedPoll.titulo}
                 </f:facet>

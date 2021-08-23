@@ -251,4 +251,8 @@ public class PollMB {
 
     }
 
+    public void refresh() throws IOException {
+        FacesContext.getCurrentInstance().getExternalContext().redirect("ver");
+    }
+
 }
