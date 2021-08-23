@@ -48,10 +48,6 @@ public class PollMB {
 
     @Getter
     @Setter
-    private Poll poll = new Poll();
-
-    @Getter
-    @Setter
     private List<Poll> polls = new ArrayList<>();
 
     @Getter
@@ -84,23 +80,11 @@ public class PollMB {
 
     @Getter
     @Setter
-    private List<String> categorias = new ArrayList<>();
-
-    @Getter
-    @Setter
     private Long id;
-
-    @Autowired
-    public UsuariosRepository usuariosRepository;
 
     @Getter
     @Setter
     private List<Jogo> selectGame = new ArrayList<>();
-
-
-    @Getter
-    @Setter
-    private Poll pollCriada = new Poll();
 
 
     @PostConstruct
@@ -122,18 +106,13 @@ public class PollMB {
     }
 
     public void votar() throws Exception {
-//        poll.setJogos(jogos);
-//        poll.setTitulo(categoria);
         if (!Assert.isNotNullOrEmpty(jogoVotado)) {
             FacesContext.getCurrentInstance().addMessage("messages",
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Escolha um filme" +
                             ".",
                             ""));
         } else {
-//            if (votarBln.equals(true)) {
                 pollService.votar(id, jogoVotado);
-//            } else {
-//            }
         }
     }
 
@@ -149,23 +128,12 @@ public class PollMB {
             }
             poll.setJogos(jogoList);
 
-            pollCriada = pollService.savePoll(poll, user);
+            pollService.savePoll(poll, user);
 
-//            Jogo jogo = new Jogo();
-//            jogo.setPoll(poll);
-//
-//            jogoRepository.save(jogo);
-
-//            poll.setJogos(jogos);
-//            jogos.forEach(j->j.setPoll(pollCriada));
-//            jogoRepository.saveAll(jogos);
 
             FacesContext.getCurrentInstance().
                     addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Poll criado com sucesso!", ""));
-//            FacesContext.getCurrentInstance().addMessage("messages",
-//                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Poll criado com sucesso!" +
-//                            "",
-//                            ""));
+
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
             FacesContext.getCurrentInstance().getExternalContext().redirect("criar");
 
@@ -182,9 +150,5 @@ public class PollMB {
                 + "&id=" + selectedPoll.getId());
     }
 
-    public void onRowSelect(SelectEvent event) throws IOException {
-        Poll poll = (Poll) event.getObject();
-        FacesContext.getCurrentInstance().getExternalContext().redirect("votar?id=" + poll.getId() + "&categoria=" + poll.getTitulo());
-    }
 
 }

@@ -27,7 +27,7 @@ public class PollService {
     public JogoRepository jogoRepository;
 
     @Transactional
-    public Poll savePoll(Poll poll, Usuario user) {
+    public void savePoll(Poll poll, Usuario user) {
 
         poll.setUsuario(user);
         Poll savedPoll = pollRepository.save(poll);
@@ -35,8 +35,6 @@ public class PollService {
             jg.setPoll(savedPoll);
             jogoRepository.save(jg);
         });
-
-        return savedPoll;
     }
 
     @Transactional
