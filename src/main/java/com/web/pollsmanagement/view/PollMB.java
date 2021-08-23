@@ -117,10 +117,8 @@ public class PollMB {
 
     public void votar() throws Exception {
         if (!Assert.isNotNullOrEmpty(jogoVotado)) {
-            FacesContext.getCurrentInstance().addMessage("messages",
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Escolha um jogo" +
-                            ".",
-                            ""));
+            FacesContext.getCurrentInstance().
+                    addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Seleccione um jogo!", ""));
         } else {
             pollService.votar(id, jogoVotado);
         }
